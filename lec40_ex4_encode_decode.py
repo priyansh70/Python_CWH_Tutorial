@@ -36,46 +36,49 @@ def randomCharacters():
     code = "".join(temp_char)
     return code
         
-# --------    
-   
-print("Welcome in the Code and Decode Your Word!!")
-print("What you want to do?")
 
-user_string = input("Enter String:: ")
+user_string = input("Enter Message:: ")
+words = user_string.split(" ")
 
 try:
-    userChoice = input("For Code Enter Press 1: \nFor Decode Enter Press 2: \n")
+    choice = input("For Code Enter Press 1: \nFor Decode Enter Press 2: \n")
     while True:
-        if userChoice not in ['1','2']:
+        if choice not in ['1','2']:
             print(
                 f"Please choose Correct Option Valid Options are: {['1','2']}")
-            userChoice = int(input("For Code Enter Press 1: \nFor Decode Enter Press 2: \n"))
+            choice = int(input("For Code Enter Press 1: \nFor Decode Enter Press 2: \n"))
         else:
             break
 except:
   print("Something went wrong")
   
-match userChoice:
+match choice:
     case '1':
-        if(len(user_string) <= 3):
-            code = user_string[::-1]
-            print("You String is Coded Now:: ",code)
-        else:
-            user_str = user_string.swapcase()
-            start_code = randomCharacters()
-            end_code = randomCharacters()
-            
-            code = start_code + user_str[1:] + user_str[0] + end_code
-            print(code)
-            
+        coded_words = []
+        for word in words:
+            if(len(word) <= 3):
+                code = word[::-1]
+                coded_words.append(code)
+            else:
+                start_code = randomCharacters()
+                end_code = randomCharacters()
+                
+                code = start_code + word[1:] + word[0] + end_code
+                coded_words.append(code)
+        print(" ".join(coded_words))
+                
     case '2':
-        if(len(user_string) <= 3):
-            decode = user_string[::-1]
-            print("You String is Decoded Now:: ",decode)
-            
-        else:
-            decode = user_string[len(user_string)-4] + user_string[3:len(user_string)-4]
-            print(decode.swapcase())
+        decoded_word = []
+        for word in words:
+            if(len(word) <= 3):
+                decode = word[::-1]
+                decoded_word.append(decode)
+                
+            else:
+                decode = word[3:-3]
+                decode = decode[-1] + decode[:-1]
+                decoded_word.append(decode)
+        print(" ".join(decoded_word))
             
     case _:
         print("Invalid Options")
